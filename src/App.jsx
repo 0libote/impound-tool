@@ -49,7 +49,7 @@ const App = () => {
         {/* Header */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-cyan-400 mb-2">Impound Tally</h1>
-          <p className="text-slate-400">Vehicle impoundment tracking system</p>
+          <p className="text-slate-400">Vehicle impound tally tool</p>
         </div>
 
         {/* Main Card */}
