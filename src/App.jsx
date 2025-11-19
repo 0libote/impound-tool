@@ -17,7 +17,7 @@ const App = () => {
     const matches = (inputText.match(new RegExp(searchTerm.replace(/[()]/g, '\\$&'), 'g')) || []).length;
 
     if (matches > 0) {
-      const offenceNumber = ((matches - 1) % 12) + 1;
+      const offenceNumber = (matches % 12) + 1;
 
       const offenceData = {
         1: { time: "12 Hours", price: "$6,500" },
@@ -41,11 +41,12 @@ const App = () => {
         price: offenceData[offenceNumber].price
       });
     } else {
+      // No matches found means it's the first offence
       setResult({
         totalMatches: 0,
-        offenceNumber: 0,
-        time: "N/A",
-        price: "N/A"
+        offenceNumber: 1,
+        time: "12 Hours",
+        price: "$6,500"
       });
     }
   };
@@ -62,7 +63,7 @@ const App = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold font-display bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-blue-500 mb-3 tracking-tight">
+          <h1 className="text-4xl md:text-5xl font-bold font-display text-white mb-3 tracking-tight drop-shadow-lg">
             Impound Calculator
           </h1>
           <p className="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
@@ -114,7 +115,7 @@ const App = () => {
                 className="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium py-3 px-6 rounded-lg border border-white/5 transition-all duration-200 flex items-center justify-center gap-2"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
-                View Fee Schedule
+                View Impound Durations
               </motion.button>
             </div>
           </div>
@@ -150,7 +151,7 @@ const App = () => {
                         <svg className="w-16 h-16 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
                       </div>
                       <div className="text-sm text-slate-400 uppercase tracking-wider font-medium mb-1">Prior Impounds</div>
-                      <div className="text-3xl font-bold text-white font-display">{Math.max(0, result.totalMatches - 1)}</div>
+                      <div className="text-3xl font-bold text-white font-display">{result.totalMatches}</div>
                       <div className="mt-2 text-xs text-blue-400/80 font-medium">Found in records</div>
                     </div>
                   </div>
@@ -202,7 +203,7 @@ const App = () => {
               className="bg-slate-900 border border-white/10 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden flex flex-col"
             >
               <div className="p-6 border-b border-white/10 flex justify-between items-center bg-slate-900/50">
-                <h3 className="text-xl font-bold text-white font-display">Impound Fee Schedule</h3>
+                <h3 className="text-xl font-bold text-white font-display">Impound Durations</h3>
                 <button
                   onClick={() => setShowScale(false)}
                   className="text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-colors"
