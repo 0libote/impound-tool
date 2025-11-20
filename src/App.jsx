@@ -152,53 +152,75 @@ const App = () => {
             </div>
           </div>
 
-          {/* Results Section - Dark Theme */}
-          <AnimatePresence mode="wait">
-            {result && (
-              <motion.div
-                key="result"
-                variants={resultVariants}
-                initial="hidden"
-                animate="visible"
-                exit="exit"
-                className="bg-slate-900 text-slate-200"
-              >
-                <div className="p-8 pt-6 border-t border-slate-800">
-                  <div className="mb-8 text-center">
-                    <div className="text-sm font-bold text-slate-500 uppercase mb-2 tracking-widest">Impound</div>
-                    <div className="text-8xl font-black text-police-500 tracking-tighter">#{result.offenceNumber}</div>
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                    <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                      <div className="text-xs font-bold text-slate-500 uppercase mb-1">Prior Offenses</div>
-                      <div className="text-2xl font-mono font-bold text-white">{result.totalMatches}</div>
-                    </div>
-                    <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                      <div className="text-xs font-bold text-slate-500 uppercase mb-1">Duration</div>
-                      <div className="text-2xl font-mono font-bold text-police-400">{result.time}</div>
-                    </div>
-                    <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
-                      <div className="text-xs font-bold text-slate-500 uppercase mb-1">Total Fee</div>
-                      <div className="text-2xl font-mono font-bold text-white">{result.price}</div>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center justify-between bg-slate-950 border border-slate-800 p-4 rounded-lg">
-                    <div className="flex items-center gap-2">
-                      <svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                      <span className="font-bold uppercase tracking-wider text-sm text-slate-300">Approval Required</span>
-                    </div>
-                    <div className="font-mono font-bold text-amber-500">
-                      {result.offenceNumber <= 5 ? 'LSC APPROVAL' : 'SGT APPROVAL'}
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+          {/* Results Section - Dark Theme - REMOVED INLINE */}
         </motion.div>
       </motion.div>
+
+      {/* Result Modal */}
+      <AnimatePresence>
+        {result && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+            onClick={() => setResult(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+              onClick={(e) => e.stopPropagation()}
+              className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-w-2xl w-full overflow-hidden flex flex-col relative z-50"
+            >
+              <div className="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-900">
+                <h3 className="text-xl font-bold text-white font-display uppercase tracking-wide">Calculation Result</h3>
+                <button
+                  onClick={() => setResult(null)}
+                  className="text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-colors"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="p-8 bg-slate-900 text-slate-200">
+                <div className="mb-8 text-center">
+                  <div className="text-sm font-bold text-slate-500 uppercase mb-2 tracking-widest">Impound</div>
+                  <div className="text-8xl font-black text-police-500 tracking-tighter">#{result.offenceNumber}</div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                  <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700 text-center">
+                    <div className="text-xs font-bold text-slate-500 uppercase mb-1">Prior Offenses</div>
+                    <div className="text-2xl font-mono font-bold text-white">{result.totalMatches}</div>
+                  </div>
+                  <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700 text-center">
+                    <div className="text-xs font-bold text-slate-500 uppercase mb-1">Duration</div>
+                    <div className="text-2xl font-mono font-bold text-police-400">{result.time}</div>
+                  </div>
+                  <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700 text-center">
+                    <div className="text-xs font-bold text-slate-500 uppercase mb-1">Total Fee</div>
+                    <div className="text-2xl font-mono font-bold text-white">{result.price}</div>
+                  </div>
+                </div>
+
+                <div className="flex items-center justify-between bg-slate-950 border border-slate-800 p-4 rounded-lg">
+                  <div className="flex items-center gap-2">
+                    <svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                    <span className="font-bold uppercase tracking-wider text-sm text-slate-300">Approval Required</span>
+                  </div>
+                  <div className="font-mono font-bold text-amber-500">
+                    {result.offenceNumber <= 5 ? 'LSC APPROVAL' : 'SGT APPROVAL'}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Offence Scale Modal */}
       <AnimatePresence>
