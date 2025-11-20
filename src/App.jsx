@@ -52,49 +52,57 @@ const App = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-slate-950 to-black text-slate-200 font-sans overflow-x-hidden">
-      <div className="fixed inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+    <div className="min-h-screen bg-slate-950 text-slate-200 font-sans overflow-x-hidden selection:bg-police-500/30">
+      {/* Subtle background gradient - cleaner than before */}
+      <div className="fixed inset-0 bg-gradient-to-b from-slate-900 to-slate-950 pointer-events-none"></div>
 
       <div className="relative z-10 max-w-4xl mx-auto px-4 py-12 md:py-20">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          layout
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold font-display text-white mb-3 tracking-tight drop-shadow-lg">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            className="inline-block mb-4 p-3 bg-police-900/30 rounded-full border border-police-500/20"
+          >
+            <span className="text-4xl">👮</span>
+          </motion.div>
+          <h1 className="text-4xl md:text-5xl font-bold font-display text-white mb-3 tracking-tight drop-shadow-lg uppercase">
             Impound Calculator
           </h1>
           <p className="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
-            Calculate vehicle impound fees and duration instantly from MDT records.
+            Official Penalty Assessment Tool
           </p>
         </motion.div>
 
         {/* Main Card */}
         <motion.div
+          layout
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="bg-slate-900/50 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl overflow-hidden ring-1 ring-white/5"
+          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden"
         >
-          <div className="p-6 md:p-8 border-b border-white/5">
+          <div className="p-6 md:p-8 border-b border-slate-800">
             <div className="mb-6">
-              <label className="block text-sm font-medium text-cyan-400 mb-2 uppercase tracking-wider">
+              <label className="block text-sm font-bold text-police-400 mb-2 uppercase tracking-widest">
                 Vehicle History Log
               </label>
-              <div className="relative group">
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-500 to-blue-500 rounded-lg blur opacity-20 group-hover:opacity-40 transition duration-500"></div>
+              <div className="relative">
                 <textarea
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
-                  className="relative w-full h-40 p-4 bg-slate-950/80 border border-white/10 rounded-lg text-slate-200 placeholder-slate-600 focus:outline-none focus:ring-2 focus:ring-cyan-500/50 focus:border-transparent resize-none transition-all duration-200 font-mono text-sm leading-relaxed"
-                  placeholder="Paste the full vehicle history from the MDT PIN tab here..."
+                  className="w-full h-40 p-4 bg-slate-950 border border-slate-700 rounded-lg text-slate-200 placeholder-slate-600 focus:outline-none focus:border-police-500 focus:ring-1 focus:ring-police-500 transition-colors duration-200 font-mono text-sm leading-relaxed"
+                  placeholder="PASTE MDT RECORD HERE..."
                 />
               </div>
-              <p className="mt-2 text-xs text-slate-500 flex items-center gap-1">
-                <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                Tip: Select all (Ctrl+A) in the MDT box, Copy (Ctrl+C), then Paste (Ctrl+V) here.
+              <p className="mt-2 text-xs text-slate-500 flex items-center gap-1 font-mono">
+                <span className="bg-slate-800 px-1 rounded text-slate-400">CTRL+A</span>
+                <span className="bg-slate-800 px-1 rounded text-slate-400">CTRL+C</span>
+                <span>to copy from MDT</span>
               </p>
             </div>
 
@@ -103,7 +111,7 @@ const App = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={checkImpound}
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-white font-semibold py-3 px-6 rounded-lg shadow-lg shadow-cyan-500/20 transition-all duration-200 flex items-center justify-center gap-2"
+                className="w-full bg-police-600 hover:bg-police-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-200 flex items-center justify-center gap-2 uppercase tracking-wide"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
                 Calculate Fees
@@ -112,69 +120,63 @@ const App = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setShowScale(true)}
-                className="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-medium py-3 px-6 rounded-lg border border-white/5 transition-all duration-200 flex items-center justify-center gap-2"
+                className="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold py-3 px-6 rounded-lg border border-slate-700 transition-colors duration-200 flex items-center justify-center gap-2 uppercase tracking-wide"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
-                View Impound Durations
+                View Durations
               </motion.button>
             </div>
           </div>
 
-          {/* Results Section */}
-          <AnimatePresence>
+          {/* Results Section - Citation Style */}
+          <AnimatePresence mode="wait">
             {result && (
               <motion.div
+                key="result"
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.4, ease: "easeInOut" }}
-                className="bg-slate-900/30"
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="bg-slate-100 text-slate-900"
               >
-                <div className="p-6 md:p-8 border-t border-white/5">
-                  <h2 className="text-xl font-semibold text-white mb-6 flex items-center gap-2">
-                    <span className="w-1.5 h-6 bg-cyan-500 rounded-full"></span>
-                    Calculation Results
-                  </h2>
+                <div className="relative">
+                  {/* Perforation effect */}
+                  <div className="absolute top-0 left-0 right-0 h-2 bg-slate-900" style={{ maskImage: 'radial-gradient(circle at 10px 0, transparent 5px, black 6px)', maskSize: '20px 10px', maskRepeat: 'repeat-x' }}></div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                    <div className="bg-slate-950/50 p-5 rounded-xl border border-white/5 relative overflow-hidden group">
-                      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg className="w-16 h-16 text-cyan-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                  <div className="p-8 pt-10">
+                    <div className="flex justify-between items-start mb-6 border-b-2 border-slate-900 pb-4">
+                      <div>
+                        <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Notice of Impound</h2>
+                        <p className="text-sm font-mono text-slate-600">PENALTY ASSESSMENT</p>
                       </div>
-                      <div className="text-sm text-slate-400 uppercase tracking-wider font-medium mb-1">Current Offence</div>
-                      <div className="text-3xl font-bold text-white font-display">#{result.offenceNumber || 0}</div>
-                      <div className="mt-2 text-xs text-cyan-400/80 font-medium">Based on history</div>
+                      <div className="text-right">
+                        <div className="text-xs font-bold text-slate-500 uppercase">Offence Level</div>
+                        <div className="text-4xl font-black text-police-700">#{result.offenceNumber}</div>
+                      </div>
                     </div>
 
-                    <div className="bg-slate-950/50 p-5 rounded-xl border border-white/5 relative overflow-hidden group">
-                      <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
-                        <svg className="w-16 h-16 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                      <div className="bg-slate-200 p-4 rounded-sm border-l-4 border-slate-400">
+                        <div className="text-xs font-bold text-slate-500 uppercase mb-1">Prior Records</div>
+                        <div className="text-2xl font-mono font-bold text-slate-800">{result.totalMatches}</div>
                       </div>
-                      <div className="text-sm text-slate-400 uppercase tracking-wider font-medium mb-1">Prior Impounds</div>
-                      <div className="text-3xl font-bold text-white font-display">{result.totalMatches}</div>
-                      <div className="mt-2 text-xs text-blue-400/80 font-medium">Found in records</div>
+                      <div className="bg-slate-200 p-4 rounded-sm border-l-4 border-police-600">
+                        <div className="text-xs font-bold text-slate-500 uppercase mb-1">Impound Time</div>
+                        <div className="text-2xl font-mono font-bold text-police-700">{result.time}</div>
+                      </div>
+                      <div className="bg-slate-200 p-4 rounded-sm border-l-4 border-red-600">
+                        <div className="text-xs font-bold text-slate-500 uppercase mb-1">Fine Amount</div>
+                        <div className="text-2xl font-mono font-bold text-red-700">{result.price}</div>
+                      </div>
                     </div>
-                  </div>
 
-                  <div className="bg-gradient-to-br from-slate-800/50 to-slate-900/50 p-6 rounded-xl border border-white/10">
-                    <h3 className="text-lg font-medium text-white mb-4 flex items-center gap-2">
-                      <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                      Required Penalty
-                    </h3>
-                    <div className="space-y-4">
-                      <div className="flex justify-between items-center p-3 bg-slate-950/30 rounded-lg border border-white/5">
-                        <span className="text-slate-400">Impound Duration</span>
-                        <span className="text-cyan-300 font-bold font-display text-lg">{result.time}</span>
+                    <div className="flex items-center justify-between bg-slate-900 text-white p-4 rounded-sm">
+                      <div className="flex items-center gap-2">
+                        <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                        <span className="font-bold uppercase tracking-wider text-sm">Required Approval</span>
                       </div>
-                      <div className="flex justify-between items-center p-3 bg-slate-950/30 rounded-lg border border-white/5">
-                        <span className="text-slate-400">Fine Amount</span>
-                        <span className="text-green-400 font-bold font-display text-lg">{result.price}</span>
-                      </div>
-                      <div className="flex justify-between items-center p-3 bg-amber-500/10 rounded-lg border border-amber-500/20">
-                        <span className="text-amber-200/80">Required Approval</span>
-                        <span className="text-amber-400 font-semibold">
-                          {result.offenceNumber <= 5 ? 'LSC Approval' : 'SGT Approval'}
-                        </span>
+                      <div className="font-mono font-bold text-amber-400">
+                        {result.offenceNumber <= 5 ? 'LSC APPROVAL' : 'SGT APPROVAL'}
                       </div>
                     </div>
                   </div>
@@ -192,18 +194,19 @@ const App = () => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-50"
+            className="fixed inset-0 bg-slate-950/90 backdrop-blur-sm flex items-center justify-center p-4 z-50"
             onClick={() => setShowScale(false)}
           >
             <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 30 }}
               onClick={(e) => e.stopPropagation()}
-              className="bg-slate-900 border border-white/10 rounded-2xl shadow-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden flex flex-col"
+              className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden flex flex-col"
             >
-              <div className="p-6 border-b border-white/10 flex justify-between items-center bg-slate-900/50">
-                <h3 className="text-xl font-bold text-white font-display">Impound Durations</h3>
+              <div className="p-6 border-b border-slate-800 flex justify-between items-center bg-slate-900">
+                <h3 className="text-xl font-bold text-white font-display uppercase tracking-wide">Impound Schedule</h3>
                 <button
                   onClick={() => setShowScale(false)}
                   className="text-slate-400 hover:text-white hover:bg-white/10 p-2 rounded-full transition-colors"
@@ -214,25 +217,25 @@ const App = () => {
                 </button>
               </div>
 
-              <div className="p-6 overflow-y-auto custom-scrollbar">
+              <div className="p-6 overflow-y-auto custom-scrollbar bg-slate-950">
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
                     <motion.div
                       key={num}
-                      initial={{ opacity: 0, y: 10 }}
+                      initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: num * 0.05 }}
+                      transition={{ delay: num * 0.03, type: "spring", stiffness: 200 }}
                       className={cn(
-                        "p-4 rounded-xl border transition-all duration-200 relative overflow-hidden group",
+                        "p-4 rounded-lg border transition-all duration-200 relative overflow-hidden group",
                         num === 12
-                          ? "bg-rose-950/30 border-rose-500/30 hover:border-rose-500/50"
-                          : "bg-slate-800/30 border-white/5 hover:border-cyan-500/30 hover:bg-slate-800/50"
+                          ? "bg-red-950/20 border-red-900/50 hover:border-red-500"
+                          : "bg-slate-900 border-slate-800 hover:border-police-500 hover:bg-slate-800"
                       )}
                     >
                       <div className="absolute top-2 right-2 text-xs font-bold opacity-20 text-white">#{num}</div>
                       <div className={cn(
-                        "text-sm font-medium mb-3 text-center uppercase tracking-wider",
-                        num === 12 ? "text-rose-400" : "text-cyan-400"
+                        "text-xs font-bold mb-3 text-center uppercase tracking-widest",
+                        num === 12 ? "text-red-500" : "text-police-400"
                       )}>
                         Offence {num}
                       </div>
@@ -240,15 +243,15 @@ const App = () => {
                       <div className="text-center">
                         {num === 12 ? (
                           <div className="py-2">
-                            <div className="text-rose-200 font-bold text-lg">Vehicle Crush</div>
-                            <div className="text-rose-400/60 text-xs mt-1">Permanent Seizure</div>
+                            <div className="text-red-400 font-black text-lg uppercase">Vehicle Crush</div>
+                            <div className="text-red-500/60 text-xs mt-1 font-mono">PERMANENT SEIZURE</div>
                           </div>
                         ) : (
                           <div className="space-y-1">
-                            <div className="text-slate-300 text-sm font-medium">
+                            <div className="text-slate-400 text-sm font-medium">
                               {['12 Hours', '24 Hours', '48 Hours', '7 Days', '10 Days', '14 Days', '18 Days', '24 Days', '28 Days', '35 Days', '40 Days'][num - 1]}
                             </div>
-                            <div className="text-white font-bold text-lg font-display">
+                            <div className="text-white font-bold text-lg font-mono">
                               {['$6,500', '$13,000', '$19,500', '$26,000', '$39,000', '$52,000', '$65,000', '$78,000', '$91,000', '$104,000', '$117,000'][num - 1]}
                             </div>
                           </div>
