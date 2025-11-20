@@ -6,7 +6,7 @@ const MouseFollower = () => {
     const cursorY = useMotionValue(-100);
 
     // Smoother, slower spring for a "floating" feel
-    const springConfig = { damping: 50, stiffness: 400 };
+    const springConfig = { damping: 30, stiffness: 800 };
     const cursorXSpring = useSpring(cursorX, springConfig);
     const cursorYSpring = useSpring(cursorY, springConfig);
 
@@ -30,7 +30,7 @@ const MouseFollower = () => {
             style={{
                 translateX: cursorXSpring,
                 translateY: cursorYSpring,
-                background: 'radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(59,130,246,0) 70%)',
+                background: 'radial-gradient(circle, rgba(59,130,246,0.3) 0%, rgba(59,130,246,0) 70%)',
             }}
         />
     );
