@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import MouseFollower from './MouseFollower';
 
 function cn(...inputs) {
   return twMerge(clsx(inputs));
@@ -53,6 +54,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-200 font-sans overflow-x-hidden selection:bg-police-500/30">
+      <MouseFollower />
       {/* Subtle background gradient - cleaner than before */}
       <div className="fixed inset-0 bg-gradient-to-b from-slate-900 to-slate-950 pointer-events-none"></div>
 
@@ -69,7 +71,7 @@ const App = () => {
             Impound Calculator
           </h1>
           <p className="text-slate-400 text-lg max-w-xl mx-auto leading-relaxed">
-            Official Penalty Assessment Tool
+            A simple tool to caculate what impound a suspect is currently on. Created by Sergeant Burton.
           </p>
         </motion.div>
 
