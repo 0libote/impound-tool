@@ -60,6 +60,9 @@ const App = () => {
         {/* Header */}
         <motion.div
           layout
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold font-display text-white mb-3 tracking-tight drop-shadow-lg uppercase">
@@ -81,14 +84,14 @@ const App = () => {
           <div className="p-6 md:p-8 border-b border-slate-800">
             <div className="mb-6">
               <label className="block text-sm font-bold text-police-400 mb-2 uppercase tracking-widest">
-                Vehicle History Log
+                MDT Impound Record
               </label>
               <div className="relative">
                 <textarea
                   value={inputText}
                   onChange={(e) => setInputText(e.target.value)}
                   className="w-full h-40 p-4 bg-slate-950 border border-slate-700 rounded-lg text-slate-200 placeholder-slate-600 focus:outline-none focus:border-police-500 focus:ring-1 focus:ring-police-500 transition-colors duration-200 font-mono text-sm leading-relaxed"
-                  placeholder="PASTE MDT RECORD HERE..."
+                  placeholder="PASTE MDT RECORD..."
                 />
               </div>
               <p className="mt-2 text-xs text-slate-500 flex items-center gap-1 font-mono">
@@ -101,7 +104,8 @@ const App = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <motion.button
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 15 }}
                 onClick={checkImpound}
                 className="w-full bg-police-600 hover:bg-police-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-200 flex items-center justify-center gap-2 uppercase tracking-wide"
               >
@@ -110,12 +114,13 @@ const App = () => {
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 400, damping: 15 }}
                 onClick={() => setShowScale(true)}
                 className="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold py-3 px-6 rounded-lg border border-slate-700 transition-colors duration-200 flex items-center justify-center gap-2 uppercase tracking-wide"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
-                View Durations
+                Impound Schedule
               </motion.button>
             </div>
           </div>
@@ -128,7 +133,7 @@ const App = () => {
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                transition={{ type: "spring", stiffness: 350, damping: 30 }}
                 className="bg-slate-900 text-slate-200"
               >
                 <div className="p-8 pt-6 border-t border-slate-800">
@@ -161,7 +166,7 @@ const App = () => {
                   <div className="flex items-center justify-between bg-slate-950 border border-slate-800 p-4 rounded-lg">
                     <div className="flex items-center gap-2">
                       <svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                      <span className="font-bold uppercase tracking-wider text-sm text-slate-300">Required Approval</span>
+                      <span className="font-bold uppercase tracking-wider text-sm text-slate-300">Approval Required</span>
                     </div>
                     <div className="font-mono font-bold text-amber-500">
                       {result.offenceNumber <= 5 ? 'LSC APPROVAL' : 'SGT APPROVAL'}
@@ -209,9 +214,9 @@ const App = () => {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
                     <motion.div
                       key={num}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: num * 0.03, type: "spring", stiffness: 200 }}
+                      transition={{ delay: num * 0.02, type: "spring", stiffness: 300, damping: 25 }}
                       className={cn(
                         "p-4 rounded-lg border transition-all duration-200 relative overflow-hidden group",
                         num === 12
