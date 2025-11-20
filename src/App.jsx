@@ -62,14 +62,6 @@ const App = () => {
           layout
           className="text-center mb-12"
         >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className="inline-block mb-4 p-3 bg-police-900/30 rounded-full border border-police-500/20"
-          >
-            <span className="text-4xl">👮</span>
-          </motion.div>
           <h1 className="text-4xl md:text-5xl font-bold font-display text-white mb-3 tracking-tight drop-shadow-lg uppercase">
             Impound Calculator
           </h1>
@@ -114,7 +106,7 @@ const App = () => {
                 className="w-full bg-police-600 hover:bg-police-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg transition-colors duration-200 flex items-center justify-center gap-2 uppercase tracking-wide"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-                Calculate Fees
+                Calculate
               </motion.button>
               <motion.button
                 whileHover={{ scale: 1.02 }}
@@ -128,7 +120,7 @@ const App = () => {
             </div>
           </div>
 
-          {/* Results Section - Citation Style */}
+          {/* Results Section - Dark Theme */}
           <AnimatePresence mode="wait">
             {result && (
               <motion.div
@@ -137,47 +129,42 @@ const App = () => {
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="bg-slate-100 text-slate-900"
+                className="bg-slate-900 text-slate-200"
               >
-                <div className="relative">
-                  {/* Perforation effect */}
-                  <div className="absolute top-0 left-0 right-0 h-2 bg-slate-900" style={{ maskImage: 'radial-gradient(circle at 10px 0, transparent 5px, black 6px)', maskSize: '20px 10px', maskRepeat: 'repeat-x' }}></div>
-
-                  <div className="p-8 pt-10">
-                    <div className="flex justify-between items-start mb-6 border-b-2 border-slate-900 pb-4">
-                      <div>
-                        <h2 className="text-2xl font-black text-slate-900 uppercase tracking-tighter">Notice of Impound</h2>
-                        <p className="text-sm font-mono text-slate-600">PENALTY ASSESSMENT</p>
-                      </div>
-                      <div className="text-right">
-                        <div className="text-xs font-bold text-slate-500 uppercase">Offence Level</div>
-                        <div className="text-4xl font-black text-police-700">#{result.offenceNumber}</div>
-                      </div>
+                <div className="p-8 pt-6 border-t border-slate-800">
+                  <div className="flex justify-between items-start mb-8">
+                    <div>
+                      <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Notice of Impound</h2>
+                      <p className="text-sm font-mono text-slate-500">PENALTY ASSESSMENT</p>
                     </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-                      <div className="bg-slate-200 p-4 rounded-sm border-l-4 border-slate-400">
-                        <div className="text-xs font-bold text-slate-500 uppercase mb-1">Prior Records</div>
-                        <div className="text-2xl font-mono font-bold text-slate-800">{result.totalMatches}</div>
-                      </div>
-                      <div className="bg-slate-200 p-4 rounded-sm border-l-4 border-police-600">
-                        <div className="text-xs font-bold text-slate-500 uppercase mb-1">Impound Time</div>
-                        <div className="text-2xl font-mono font-bold text-police-700">{result.time}</div>
-                      </div>
-                      <div className="bg-slate-200 p-4 rounded-sm border-l-4 border-red-600">
-                        <div className="text-xs font-bold text-slate-500 uppercase mb-1">Fine Amount</div>
-                        <div className="text-2xl font-mono font-bold text-red-700">{result.price}</div>
-                      </div>
+                    <div className="text-right">
+                      <div className="text-xs font-bold text-slate-500 uppercase">Offence Level</div>
+                      <div className="text-4xl font-black text-police-500">#{result.offenceNumber}</div>
                     </div>
+                  </div>
 
-                    <div className="flex items-center justify-between bg-slate-900 text-white p-4 rounded-sm">
-                      <div className="flex items-center gap-2">
-                        <svg className="w-5 h-5 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                        <span className="font-bold uppercase tracking-wider text-sm">Required Approval</span>
-                      </div>
-                      <div className="font-mono font-bold text-amber-400">
-                        {result.offenceNumber <= 5 ? 'LSC APPROVAL' : 'SGT APPROVAL'}
-                      </div>
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                      <div className="text-xs font-bold text-slate-500 uppercase mb-1">Prior Offenses</div>
+                      <div className="text-2xl font-mono font-bold text-white">{result.totalMatches}</div>
+                    </div>
+                    <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                      <div className="text-xs font-bold text-slate-500 uppercase mb-1">Duration</div>
+                      <div className="text-2xl font-mono font-bold text-police-400">{result.time}</div>
+                    </div>
+                    <div className="bg-slate-800/50 p-4 rounded-lg border border-slate-700">
+                      <div className="text-xs font-bold text-slate-500 uppercase mb-1">Total Fee</div>
+                      <div className="text-2xl font-mono font-bold text-white">{result.price}</div>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between bg-slate-950 border border-slate-800 p-4 rounded-lg">
+                    <div className="flex items-center gap-2">
+                      <svg className="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+                      <span className="font-bold uppercase tracking-wider text-sm text-slate-300">Required Approval</span>
+                    </div>
+                    <div className="font-mono font-bold text-amber-500">
+                      {result.offenceNumber <= 5 ? 'LSC APPROVAL' : 'SGT APPROVAL'}
                     </div>
                   </div>
                 </div>
