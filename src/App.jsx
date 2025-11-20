@@ -13,11 +13,31 @@ const App = () => {
   const [result, setResult] = useState(null);
   const [showScale, setShowScale] = useState(false);
 
-  const fadeAnimation = {
-    initial: { opacity: 0 },
-    animate: { opacity: 1 },
-    exit: { opacity: 0 },
-    transition: { duration: 0.3 }
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: -10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
+  const resultVariants = {
+    hidden: { opacity: 0, y: -10, height: 0 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      height: 'auto',
+      transition: { duration: 0.4, ease: "easeOut" }
+    },
+    exit: { opacity: 0, height: 0, transition: { duration: 0.3 } }
   };
 
   const checkImpound = () => {
@@ -65,10 +85,15 @@ const App = () => {
       {/* Subtle background gradient - cleaner than before */}
       <div className="fixed inset-0 bg-gradient-to-b from-slate-900 to-slate-950 pointer-events-none"></div>
 
-      <div className="relative z-10 max-w-4xl mx-auto px-4 py-12 md:py-20">
+      <motion.div
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+        className="relative z-10 max-w-4xl mx-auto px-4 py-12 md:py-20"
+      >
         {/* Header */}
         <motion.div
-          {...fadeAnimation}
+          variants={itemVariants}
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold font-display text-white mb-3 tracking-tight drop-shadow-lg uppercase">
@@ -81,13 +106,13 @@ const App = () => {
 
         {/* Main Card */}
         <motion.div
-          {...fadeAnimation}
+          variants={itemVariants}
           className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden"
         >
           <div className="p-6 md:p-8 border-b border-slate-800">
             <div className="mb-6">
               <label className="block text-sm font-bold text-police-400 mb-2 uppercase tracking-widest">
-                MDT Impound Record
+                MDT PINs Page
               </label>
               <div className="relative">
                 <textarea
@@ -123,7 +148,7 @@ const App = () => {
                 className="w-full bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white font-bold py-3 px-6 rounded-lg border border-slate-700 transition-colors duration-200 flex items-center justify-center gap-2 uppercase tracking-wide"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" /></svg>
-                Impound Schedule
+                TIME + PRICE LIST
               </motion.button>
             </div>
           </div>
@@ -133,17 +158,19 @@ const App = () => {
             {result && (
               <motion.div
                 key="result"
-                {...fadeAnimation}
+                variants={resultVariants}
+                initial="hidden"
+                animate="visible"
+                exit="exit"
                 className="bg-slate-900 text-slate-200"
               >
                 <div className="p-8 pt-6 border-t border-slate-800">
                   <div className="flex justify-between items-start mb-8">
                     <div>
-                      <h2 className="text-2xl font-black text-white uppercase tracking-tighter">Notice of Impound</h2>
-                      <p className="text-sm font-mono text-slate-500">PENALTY ASSESSMENT</p>
+                      {/* Removed Notice of Impound and PENALTY ASSESSMENT text */}
                     </div>
                     <div className="text-right">
-                      <div className="text-xs font-bold text-slate-500 uppercase">Offence Level</div>
+                      <div className="text-xs font-bold text-slate-500 uppercase">Impound</div>
                       <div className="text-4xl font-black text-police-500">#{result.offenceNumber}</div>
                     </div>
                   </div>
@@ -177,7 +204,7 @@ const App = () => {
             )}
           </AnimatePresence>
         </motion.div>
-      </div>
+      </motion.div>
 
       {/* Offence Scale Modal */}
       <AnimatePresence>
