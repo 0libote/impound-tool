@@ -13,6 +13,13 @@ const App = () => {
   const [result, setResult] = useState(null);
   const [showScale, setShowScale] = useState(false);
 
+  const fadeAnimation = {
+    initial: { opacity: 0 },
+    animate: { opacity: 1 },
+    exit: { opacity: 0 },
+    transition: { duration: 0.3 }
+  };
+
   const checkImpound = () => {
     const searchTerm = "IMPOUNDED VEHICLE (INDICATES VEHICLE DRIVEN WAS IMPOUNDED)";
     const matches = (inputText.match(new RegExp(searchTerm.replace(/[()]/g, '\\$&'), 'g')) || []).length;
@@ -61,10 +68,7 @@ const App = () => {
       <div className="relative z-10 max-w-4xl mx-auto px-4 py-12 md:py-20">
         {/* Header */}
         <motion.div
-          layout
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+          {...fadeAnimation}
           className="text-center mb-12"
         >
           <h1 className="text-4xl md:text-5xl font-bold font-display text-white mb-3 tracking-tight drop-shadow-lg uppercase">
@@ -77,10 +81,7 @@ const App = () => {
 
         {/* Main Card */}
         <motion.div
-          layout
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ type: "spring", stiffness: 300, damping: 30 }}
+          {...fadeAnimation}
           className="bg-slate-900 border border-slate-800 rounded-xl shadow-2xl overflow-hidden"
         >
           <div className="p-6 md:p-8 border-b border-slate-800">
@@ -132,10 +133,7 @@ const App = () => {
             {result && (
               <motion.div
                 key="result"
-                initial={{ height: 0, opacity: 0 }}
-                animate={{ height: 'auto', opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ type: "spring", stiffness: 350, damping: 30 }}
+                {...fadeAnimation}
                 className="bg-slate-900 text-slate-200"
               >
                 <div className="p-8 pt-6 border-t border-slate-800">
@@ -192,10 +190,7 @@ const App = () => {
             onClick={() => setShowScale(false)}
           >
             <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
+              {...fadeAnimation}
               onClick={(e) => e.stopPropagation()}
               className="bg-slate-900 border border-slate-700 rounded-xl shadow-2xl max-w-5xl w-full max-h-[85vh] overflow-hidden flex flex-col"
             >
@@ -216,9 +211,9 @@ const App = () => {
                   {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((num) => (
                     <motion.div
                       key={num}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: num * 0.02, type: "spring", stiffness: 300, damping: 25 }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      transition={{ delay: num * 0.05, duration: 0.3 }}
                       className={cn(
                         "p-4 rounded-lg border transition-all duration-200 relative overflow-hidden group",
                         num === 12
