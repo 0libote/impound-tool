@@ -164,14 +164,9 @@ const App = () => {
                 className="bg-slate-900 text-slate-200"
               >
                 <div className="p-8 pt-6 border-t border-slate-800">
-                  <div className="flex justify-between items-start mb-8">
-                    <div>
-                      {/* Removed Notice of Impound and PENALTY ASSESSMENT text */}
-                    </div>
-                    <div className="text-right w-full">
-                      <div className="text-xs font-bold text-slate-500 uppercase mb-1">Impound</div>
-                      <div className="text-6xl font-black text-police-500 tracking-tighter">#{result.offenceNumber}</div>
-                    </div>
+                  <div className="mb-8 text-center">
+                    <div className="text-sm font-bold text-slate-500 uppercase mb-2 tracking-widest">Impound</div>
+                    <div className="text-8xl font-black text-police-500 tracking-tighter">#{result.offenceNumber}</div>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
